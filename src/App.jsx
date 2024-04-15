@@ -23,7 +23,9 @@ const App = () => {
   const [gameturns, setGameturns] = useState([]);
 
   const activePlayer = getActivePlayer(gameturns);
-  const gameboard = INITIAL_STATE;
+
+  // VERY VERY IMPORTANT THAT THIS KIND OF COPY IS MADE
+  const gameboard = [...INITIAL_STATE.map((inner) => [...inner])];
 
   for (const turn of gameturns) {
     const { player, square } = turn;
@@ -55,13 +57,20 @@ const App = () => {
       return updatedGameturns;
     });
   };
+
+  function handleRematch() {
+    setGameturns([]);
+  }
+
   return (
     <main>
       <ol className="player-container">
         <Player name="Player 1" symbol="X" isActive={activePlayer === "X"} />
         <Player name="Player 2" symbol="O" isActive={activePlayer === "O"} />
       </ol>
-      {(winner || hasDraw) && <GameOver winner={winner} />}
+      {(winner || hasDraw) && (
+        <GameOver winner={winner} onRestart={handleRematch} />
+      )}
       <GameBoard board={gameboard} selectBoardBox={handleSwitchActivePlayer} />
       <Log turns={gameturns} />
     </main>
