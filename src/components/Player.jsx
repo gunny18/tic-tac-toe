@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 
-const Player = ({ name, symbol }) => {
+const Player = ({ name, symbol, isActive }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState(name);
 
@@ -13,7 +13,9 @@ const Player = ({ name, symbol }) => {
     setPlayerName(e.target.value);
   };
 
-  let playerNameContent = <h2>{playerName}</h2>;
+  let playerNameContent = (
+    <h2 className={isActive ? "active" : undefined}>{playerName}</h2>
+  );
   if (isEditing) {
     playerNameContent = (
       <input

@@ -7,7 +7,7 @@ const INITIAL_STATE = [
   [null, null, null],
 ];
 
-const GameBoard = () => {
+const GameBoard = ({ switchActive, currentPlayer }) => {
   const [gameboard, setGameboard] = useState(INITIAL_STATE);
 
   const handleUpdateGameboard = (rowIdx, colIdx) => {
@@ -15,11 +15,12 @@ const GameBoard = () => {
       const updatedGameBoard = [
         ...prevGameBorad.map((innerBoard) => [...innerBoard]),
       ];
-      updatedGameBoard[rowIdx][colIdx] = "X";
+      updatedGameBoard[rowIdx][colIdx] = currentPlayer;
       return updatedGameBoard;
     });
+    switchActive();
   };
-  
+
   return (
     <ol className="gameboard">
       {gameboard.map((row, rowIdx) => (

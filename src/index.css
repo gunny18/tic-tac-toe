@@ -13,9 +13,12 @@ li {
   grid-template-columns: repeat(3, 1fr);
 }
 
-
 .gameboard li,
 .gameboard button {
   width: 100px;
   height: 100px;
+}
+
+.active {
+  outline: 1px solid red;
 }
