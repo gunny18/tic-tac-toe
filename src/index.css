@@ -4,17 +4,19 @@
   box-sizing: border-box;
 }
 
+/* li {
+  list-style: none;
+} */
+
+.gameboard-row {
+  display: flex;
+}
+
 li {
   list-style: none;
 }
 
-.gameboard {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.gameboard li,
-.gameboard button {
+.boxes button {
   width: 100px;
   height: 100px;
 }

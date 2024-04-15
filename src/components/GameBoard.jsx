@@ -14,25 +14,29 @@ const GameBoard = ({ turns, selectBoardBox }) => {
     const { row, col } = square;
     gameboard[row][col] = player;
   }
-  
+
   return (
     <ol className="gameboard">
-      {gameboard.map((row, rowIdx) => (
-        <ol key={rowIdx}>
-          {row.map((col, colIdx) => (
-            <li key={colIdx}>
-              <Button
-                onClick={() => {
-                  selectBoardBox(rowIdx, colIdx);
-                }}
-                disabled={col !== null}
-              >
-                {col}
-              </Button>
-            </li>
-          ))}
-        </ol>
-      ))}
+      {gameboard.map((row, rowIdx) => {
+        return (
+          <li key={rowIdx}>
+            <ol className="gameboard-row">
+              {row.map((col, colIdx) => (
+                <li className="boxes" key={colIdx}>
+                  <Button
+                    onClick={() => {
+                      selectBoardBox(rowIdx, colIdx);
+                    }}
+                    disabled={col !== null}
+                  >
+                    {col}
+                  </Button>
+                </li>
+              ))}
+            </ol>
+          </li>
+        );
+      })}
     </ol>
   );
 };
