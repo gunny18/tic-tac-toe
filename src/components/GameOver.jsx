@@ -2,7 +2,7 @@ import Button from "./Button";
 
 const GameOver = ({ winner, onRestart }) => {
   return (
-    <div>
+    <div className="gameover">
       <h2>Game Over!!</h2>
       {winner && <p>{winner} Won!!</p>}
       {!winner && <p>Its a draw</p>}
