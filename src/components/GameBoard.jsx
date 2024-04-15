@@ -7,7 +7,6 @@ const INITIAL_STATE = [
 ];
 
 const GameBoard = ({ turns, selectBoardBox }) => {
-  console.log(turns);
   const gameboard = INITIAL_STATE;
 
   for (const turn of turns) {
@@ -15,9 +14,7 @@ const GameBoard = ({ turns, selectBoardBox }) => {
     const { row, col } = square;
     gameboard[row][col] = player;
   }
-
-  console.log(gameboard);
-
+  
   return (
     <ol className="gameboard">
       {gameboard.map((row, rowIdx) => (
@@ -28,6 +25,7 @@ const GameBoard = ({ turns, selectBoardBox }) => {
                 onClick={() => {
                   selectBoardBox(rowIdx, colIdx);
                 }}
+                disabled={col !== null}
               >
                 {col}
               </Button>
