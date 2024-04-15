@@ -2,6 +2,13 @@ import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
 import { useState } from "react";
+import { winningCombinations } from "./winningCombinations";
+
+const INITIAL_STATE = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
 
 const getActivePlayer = (gameturns) => {
   let currentPlayer = "X";
@@ -15,6 +22,25 @@ const App = () => {
   const [gameturns, setGameturns] = useState([]);
 
   const activePlayer = getActivePlayer(gameturns);
+  const gameboard = INITIAL_STATE;
+
+  for (const turn of gameturns) {
+    const { player, square } = turn;
+    const { row, col } = square;
+    gameboard[row][col] = player;
+  }
+
+  let winner;
+  for (const combination of winningCombinations) {
+    const firstTurn = gameboard[combination[0].row][combination[0].col];
+    const secondTurn = gameboard[combination[1].row][combination[1].col];
+    const thirdTurn = gameboard[combination[2].row][combination[2].col];
+
+    if (firstTurn && firstTurn === secondTurn && firstTurn === thirdTurn) {
+      winner = firstTurn;
+      break;
+    }
+  }
 
   const handleSwitchActivePlayer = (rowIdx, colIdx) => {
     setGameturns((prevGameturns) => {
@@ -32,7 +58,8 @@ const App = () => {
         <Player name="Player 1" symbol="X" isActive={activePlayer === "X"} />
         <Player name="Player 2" symbol="O" isActive={activePlayer === "O"} />
       </ol>
-      <GameBoard turns={gameturns} selectBoardBox={handleSwitchActivePlayer} />
+      {winner && <p>{winner} wins the game!!!</p>}
+      <GameBoard board={gameboard} selectBoardBox={handleSwitchActivePlayer} />
       <Log turns={gameturns} />
     </main>
   );
