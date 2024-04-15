@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Button from "./Button";
 
 const INITIAL_STATE = [
@@ -7,19 +6,17 @@ const INITIAL_STATE = [
   [null, null, null],
 ];
 
-const GameBoard = ({ switchActive, currentPlayer }) => {
-  const [gameboard, setGameboard] = useState(INITIAL_STATE);
+const GameBoard = ({ turns, selectBoardBox }) => {
+  console.log(turns);
+  const gameboard = INITIAL_STATE;
 
-  const handleUpdateGameboard = (rowIdx, colIdx) => {
-    setGameboard((prevGameBorad) => {
-      const updatedGameBoard = [
-        ...prevGameBorad.map((innerBoard) => [...innerBoard]),
-      ];
-      updatedGameBoard[rowIdx][colIdx] = currentPlayer;
-      return updatedGameBoard;
-    });
-    switchActive();
-  };
+  for (const turn of turns) {
+    const { player, square } = turn;
+    const { row, col } = square;
+    gameboard[row][col] = player;
+  }
+
+  console.log(gameboard);
 
   return (
     <ol className="gameboard">
@@ -29,7 +26,7 @@ const GameBoard = ({ switchActive, currentPlayer }) => {
             <li key={colIdx}>
               <Button
                 onClick={() => {
-                  handleUpdateGameboard(rowIdx, colIdx);
+                  selectBoardBox(rowIdx, colIdx);
                 }}
               >
                 {col}
